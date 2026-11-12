@@ -1,0 +1,17 @@
+services:
+  airflow:
+    image: apache/airflow:2.8.1-python3.10
+    container_name: airflow_stocks_app
+    user: "50000:0"
+    restart: always
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=False
+      - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
+    volumes:
+      - ./dags:/opt/airflow/dags:z
+      - ./notebooks:/opt/airflow/notebooks:z
+      - ./data:/opt/airflow/data:z
+    ports:
+      - "8088:8080"
+    command: standalone
